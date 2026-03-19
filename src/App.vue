@@ -68,7 +68,7 @@ const toggleTask = (id) => {
       </TodoList>
       <TodoFooter :count="tasks.length" />
     </div>
-    <ConfirmDialog v-model:visible="isDialogVisible" title="确认删除" message="确定要删除这个任务吗？此操作不可撤销。"
+    <ConfirmDialog v-model:visible="isDialogVisible" title="确认删除" message="确定要删除这个任务吗？真的吗此操作不可撤销。"
       @confirm="confirmRemoveTask" @cancel="cancelRemoveTask" />
   </div>
 </template>
