@@ -1,1 +1,3 @@
-function ccb () {}
+function c() {
+  console.log('c')
+}
