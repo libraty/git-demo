@@ -1,1 +1,1 @@
-function c() {}
+function ccb () {}
