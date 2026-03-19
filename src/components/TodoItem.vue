@@ -1,13 +1,8 @@
 <template>
   <li class="todo-item">
     <div class="todo-item-content">
-      <input 
-        type="checkbox" 
-        class="todo-checkbox" 
-        :checked="completed"
-        @click="$emit('click:checkbox')"
-      />
-      <span class="todo-text">{{ text }}</span>
+      <input type="checkbox" class="todo-checkbox" :checked="completed" @click="$emit('click:checkbox')" />
+      <span class="todo-text" :title="text" :class="{ 'text-truncated': text.length > 20 }">{{ text }}</span>
     </div>
     <button class="todo-delete-btn" @click="$emit('click:delete')">删除</button>
   </li>
@@ -61,6 +56,14 @@ defineEmits(['click:checkbox', 'click:delete'])
 .todo-text {
   font-size: 1rem;
   color: #333;
+  max-width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.todo-text.text-truncated {
+  cursor: help;
 }
 
 .todo-delete-btn {
