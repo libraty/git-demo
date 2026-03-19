@@ -1,14 +1,31 @@
 <template>
   <li class="todo-item">
     <div class="todo-item-content">
-      <input type="checkbox" class="todo-checkbox" disabled />
-      <span class="todo-text">示例任务</span>
+      <input 
+        type="checkbox" 
+        class="todo-checkbox" 
+        :checked="completed"
+        @click="$emit('click:checkbox')"
+      />
+      <span class="todo-text">{{ text }}</span>
     </div>
-    <button class="todo-delete-btn" disabled>删除</button>
+    <button class="todo-delete-btn" @click="$emit('click:delete')">删除</button>
   </li>
 </template>
 
 <script setup>
+defineProps({
+  text: {
+    type: String,
+    default: ''
+  },
+  completed: {
+    type: Boolean,
+    default: false
+  }
+})
+
+defineEmits(['click:checkbox', 'click:delete'])
 </script>
 
 <style scoped>

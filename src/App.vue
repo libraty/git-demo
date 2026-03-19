@@ -1,24 +1,54 @@
 <script setup>
+import { ref } from 'vue'
 import TodoHeader from './components/TodoHeader.vue'
 import TodoInput from './components/TodoInput.vue'
 import TodoFilters from './components/TodoFilters.vue'
 import TodoList from './components/TodoList.vue'
 import TodoItem from './components/TodoItem.vue'
 import TodoFooter from './components/TodoFooter.vue'
+
+const tasks = ref([
+  { id: 1, text: '示例任务 1', completed: false },
+  { id: 2, text: '示例任务 2', completed: false },
+  { id: 3, text: '示例任务 3', completed: false }
+])
+
+const newTask = ref('')
+
+const addTask = () => {
+  if (newTask.value.trim()) {
+    tasks.value.push({
+      id: Date.now(),
+      text: newTask.value.trim(),
+      completed: false
+    })
+    newTask.value = ''
+  }
+}
+
+const removeTask = (id) => {
+  tasks.value = tasks.value.filter(task => task.id !== id)
+}
+
+const toggleTask = (id) => {
+  const task = tasks.value.find(task => task.id === id)
+  if (task) {
+    task.completed = !task.completed
+  }
+}
 </script>
 
 <template>
   <div class="todo-app">
     <div class="todo-container">
       <TodoHeader />
-      <TodoInput />
+      <TodoInput @add-task="addTask" v-model="newTask" @enter="addTask" />
       <TodoFilters />
       <TodoList>
-        <TodoItem />
-        <TodoItem />
-        <TodoItem />
+        <TodoItem v-for="task in tasks" :key="task.id" :text="task.text" @click:checkbox="toggleTask(task.id)"
+          @click:delete="removeTask(task.id)" />
       </TodoList>
-      <TodoFooter />
+      <TodoFooter :count="tasks.length" />
     </div>
   </div>
 </template>

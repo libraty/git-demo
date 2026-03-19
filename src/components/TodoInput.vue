@@ -4,13 +4,23 @@
       type="text" 
       class="todo-input" 
       placeholder="添加新任务..." 
-      disabled
+      :value="modelValue"
+      @input="$emit('update:modelValue', $event.target.value)"
+      @keyup.enter="$emit('enter')"
     />
-    <button class="todo-add-btn" disabled>添加</button>
+    <button class="todo-add-btn" @click="$emit('add-task')">添加</button>
   </div>
 </template>
 
 <script setup>
+defineProps({
+  modelValue: {
+    type: String,
+    default: ''
+  }
+})
+
+defineEmits(['update:modelValue', 'add-task', 'enter'])
 </script>
 
 <style scoped>
